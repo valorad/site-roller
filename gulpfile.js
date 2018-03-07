@@ -8,6 +8,9 @@ const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const webpack = require('webpack-stream');
 const htmlmin = require('gulp-htmlmin');
+const lr = require('tiny-lr');
+
+const devServer = lr();
 
 const clientPath = 'src';
 
@@ -69,6 +72,26 @@ gulp.task('minify:html', (done) => {
 
 });
 
+gulp.task('watch', () => {
+
+  devServer.listen(51905, (err) => {
+    if (err) {
+      return console.error(err);
+    };
+
+    // Watch .scss files
+    gulp.watch('src/scss/**/*.scss', gulp.parallel('compile:css'));
+
+    // Watch .js files
+    gulp.watch(['src/ts/**/*.ts', '!src/ts/**/*.d.ts'], gulp.parallel('compile:ts'));
+
+    // Watch .html files
+    gulp.watch(['src/**/*.html'], gulp.parallel('minify:html'));
+
+  });
+
+});
+
 
 gulp.task("default", gulp.series(
   'clean',
@@ -76,3 +99,12 @@ gulp.task("default", gulp.series(
   'compile:ts',
   'minify:html'
 ));
+
+gulp.task("serve", gulp.series(
+  'clean',
+  'compile:css',
+  'compile:ts',
+  'minify:html',
+  'watch'
+));
+
