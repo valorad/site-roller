@@ -1,0 +1,43 @@
+{
+  "name": "site-roller",
+  "version": "1.0.0",
+  "description": "Bundle up a site based on multiple html files, with their respective JS and CSS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wcxaaa/site-roller.git"
+  },
+  "keywords": [
+    "gulp",
+    "webpack"
+  ],
+  "author": "wcxaaa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wcxaaa/site-roller/issues"
+  },
+  "homepage": "https://github.com/wcxaaa/site-roller#readme",
+  "devDependencies": {
+    "autoprefixer": "^8.1.0",
+    "cssnano": "^3.10.0",
+    "del": "^3.0.0",
+    "gulp": "^4.0.0",
+    "gulp-htmlmin": "^4.0.0",
+    "gulp-postcss": "^7.0.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "pump": "^3.0.0",
+    "ts-loader": "^4.0.1",
+    "typescript": "^2.7.2",
+    "uglifyjs-webpack-plugin": "^1.2.2",
+    "webpack": "^4.1.0",
+    "webpack-stream": "^4.0.2"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0"
+  }
+}
