@@ -2,7 +2,7 @@ const { resolve } = require("path");
 
 require("babel-polyfill");
  
-let pages = ['base']; // ts file names
+let pages = ['base', 'inner']; // ts file names
 let entry = {};
 
 for (let page of pages) {
