@@ -6,8 +6,10 @@ const sourcemaps = require('gulp-sourcemaps');
 const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
+const cssimport = require("gulp-cssimport");
 const webpack = require('webpack-stream');
 const htmlmin = require('gulp-htmlmin');
+const imagemin = require('gulp-imagemin');
 const lr = require('tiny-lr');
 
 const devServer = lr();
@@ -72,6 +74,37 @@ gulp.task('minify:html', (done) => {
 
 });
 
+gulp.task('minify:images', (done) => {
+
+  pump(
+    [
+      gulp.src(`${clientPath}/images/**`),
+      imagemin(),
+      gulp.dest(`dist/images/`)
+    ], done
+  );
+
+});
+
+gulp.task('copy:statics', (done) => {
+
+  pump(
+    [
+      gulp.src(`${clientPath}/css/**/*.css`),
+      gulp.dest(`dist/css/`)
+    ]
+  );
+
+  pump(
+    [
+      gulp.src(`${clientPath}/fonts/**`),
+      gulp.dest(`dist/fonts/`)
+    ], done
+  );
+
+});
+
+
 gulp.task('watch', () => {
 
   devServer.listen(51905, (err) => {
@@ -88,6 +121,9 @@ gulp.task('watch', () => {
     // Watch .html files
     gulp.watch(['src/**/*.html'], gulp.parallel('minify:html'));
 
+    // Watch image files
+    gulp.watch(['src/images/**'], gulp.parallel('minify:images'));
+
   });
 
 });
@@ -97,7 +133,9 @@ gulp.task("default", gulp.series(
   'clean',
   'compile:css',
   'compile:ts',
-  'minify:html'
+  'minify:html',
+  'minify:images',
+  'copy:statics'
 ));
 
 gulp.task("serve", gulp.series(
@@ -105,6 +143,8 @@ gulp.task("serve", gulp.series(
   'compile:css',
   'compile:ts',
   'minify:html',
+  'minify:images',
+  'copy:statics',
   'watch'
 ));
 
