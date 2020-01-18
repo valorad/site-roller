@@ -6,7 +6,6 @@ const sourcemaps = require('gulp-sourcemaps');
 const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
-const cssimport = require("gulp-cssimport");
 const webpack = require('webpack-stream');
 const htmlmin = require('gulp-htmlmin');
 const imagemin = require('gulp-imagemin');
@@ -26,7 +25,7 @@ gulp.task('clean', async (done) => {
 gulp.task('compile:css', (done) => {
 
   let postCSSPlugins = [
-    autoprefixer({browsers: ['last 3 version']}),
+    autoprefixer(),
     cssnano()
   ];
 
@@ -49,8 +48,7 @@ gulp.task('compile:ts', (done) => {
     [
       // no gulp.src here. It's been specified in config file.
       webpack(
-        require('./webpack/w.c.script'),
-        require("webpack") // <- a work around 'cuz currently webpack 4 is unsupported by webpack-stream
+        require('./webpack/w.c.script')
       ),
       
       gulp.dest('dist/js/')
@@ -78,7 +76,7 @@ gulp.task('minify:images', (done) => {
 
   pump(
     [
-      gulp.src(`${clientPath}/images/**`),
+      gulp.src([`${clientPath}/images/**`, `!.gitkeep`]),
       imagemin(),
       gulp.dest(`dist/images/`)
     ], done
@@ -97,7 +95,7 @@ gulp.task('copy:statics', (done) => {
 
   pump(
     [
-      gulp.src(`${clientPath}/fonts/**`),
+      gulp.src([`${clientPath}/fonts/**`, `!.gitkeep`]),
       gulp.dest(`dist/fonts/`)
     ], done
   );
