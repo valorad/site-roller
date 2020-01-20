@@ -42,7 +42,13 @@ let config = {
   output: {
     filename: '[name].js',
     chunkFilename: '[id].[hash].chunk.js'
-  }
+  },
+
+  stats: {
+    excludeAssets: [
+      /\.(png|jpe?g|gif|ico|svg|map)$/i,
+    ]
+  },
 
 
 };

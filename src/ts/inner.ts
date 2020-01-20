@@ -1,7 +1,7 @@
-export class Inner {
+class Inner {
   constructor() {
     console.log("inner works");
   }
 }
 
-new Inner();
+export default new Inner();

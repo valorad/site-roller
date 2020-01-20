@@ -1,7 +1,7 @@
-export class Base {
+class Base {
   constructor() {
     console.log("base works");
   }
 }
 
-new Base();
+export default new Base();
